@@ -5,7 +5,7 @@ function Home() {
   return (
     <div>
       <h2>Home</h2>
-      <Link to='/math'>Go to Math</Link>
+      <Link to='/mathtest'>Go to Math</Link>
     </div>
   )
 }

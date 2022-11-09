@@ -1,15 +1,15 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import '../index.css'
-import Math from './Math'
+import MathTest from './MathTest'
 import Home from './Home'
 
 function App() {
   return (
-    <div className='text-blue-700'>
+    <div className='bg-slate-100 absolute h-full w-full'>
     <Routes>
       <Route path='/' element={<Home/>}></Route>
-      <Route path='/math' element={<Math/>}></Route>
+      <Route path='/mathtest' element={<MathTest/>}></Route>
     </Routes>
     </div>
   )
