@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import '../index.css'
-import Game from './Game'
+import Math from './Math'
 import Home from './Home'
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className='text-blue-700'>
     <Routes>
       <Route path='/' element={<Home/>}></Route>
-      <Route path='/game' element={<Game/>}></Route>
+      <Route path='/math' element={<Math/>}></Route>
     </Routes>
     </div>
   )

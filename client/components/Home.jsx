@@ -5,7 +5,7 @@ function Home() {
   return (
     <div>
       <h2>Home</h2>
-      <Link to='/game'>Go to game</Link>
+      <Link to='/math'>Go to Math</Link>
     </div>
   )
 }
