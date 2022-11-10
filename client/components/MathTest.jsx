@@ -14,6 +14,8 @@ function MathTest() {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
+    const answer = e.target.elements.answer.value
+    // console.log(e.target.elements.answer.value)
     refreshQuestion()
   }
   
@@ -25,13 +27,13 @@ function MathTest() {
     <div>
       <div>
         <h2>Math</h2>
-        <div className=" bg-white w-1/3 mx-auto mt-16 p-4 rounded-md h-36 flex items-center justify-center">
+          <div className=" bg-white w-1/3 mx-auto mt-16 p-4 rounded-md h-36 flex items-center justify-center">
           <h2 className=" text-4xl">{num1} + {num2}</h2>
         </div>
         
         <form onSubmit={handleSubmit}>
-          <input type="text" />
-          <input type="submit" />
+          <input type="text" name="answer"/>
+          {/* <input type="submit" hidden/> */}
         </form>
       </div>
     </div>
