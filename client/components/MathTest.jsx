@@ -5,6 +5,7 @@ function MathTest() {
   const [num1, setNum1] = useState(randomNum(10,99))
   const [num2, setNum2] = useState(randomNum(10,99))
   const [sum, setSum] = useState(num1+num2)
+  const [count, setCount] =useState(0)
 
   const refreshQuestion = () =>{
     setNum1(randomNum(10,99))
@@ -15,6 +16,9 @@ function MathTest() {
   const handleSubmit = (e) =>{
     e.preventDefault()
     const answer = e.target.elements.answer.value
+    if (answer===sum){
+      setCount()
+    }
     console.log(sum)
     refreshQuestion()
   }
@@ -25,9 +29,10 @@ function MathTest() {
 
   return (
     <div>
-      <div>
+      <div className=" text-center">
         <h2>Math</h2>
-          <div className=" bg-white w-1/3 mx-auto mt-16 p-4 rounded-md h-36 flex items-center justify-center">
+          <h2 className="mt-16 text-xl">Correct answers: {count}</h2>
+          <div className=" bg-white w-1/3 mx-auto mt-5 p-4 rounded-md h-36 flex items-center justify-center">
           <h2 className=" text-4xl">{num1} + {num2}</h2>
         </div>
         
