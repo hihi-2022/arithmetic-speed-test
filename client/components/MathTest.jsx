@@ -4,25 +4,22 @@ function MathTest() {
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   const [num1, setNum1] = useState(randomNum(10,99))
   const [num2, setNum2] = useState(randomNum(10,99))
-  const [sum, setSum] = useState(num1+num2)
   const [count, setCount] =useState(0)
 
   const refreshQuestion = () =>{
     setNum1(randomNum(10,99))
     setNum2(randomNum(10,99))
-    setSum(num1+num2)
   }
 
   const handleSubmit = (e) =>{
     e.preventDefault()
     const answer = e.target.elements.answer.value
-    if (answer===sum){
-      setCount()
+    if (Number(answer)===num1+num2){
+      setCount(count+1)
     }
-    console.log(sum)
     refreshQuestion()
   }
-  
+  console.log(num1+num2)
   // useEffect(()=>{
   //   console.log('start')
   // },[])
