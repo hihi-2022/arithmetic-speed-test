@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import '../index.css'
-import MathTest from './MathTest'
+import MathParent from './MathParent'
 import Home from './Home'
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className='bg-slate-100 absolute h-full w-full'>
     <Routes>
       <Route path='/' element={<Home/>}></Route>
-      <Route path='/mathtest' element={<MathTest/>}></Route>
+      <Route path='/mathtest' element={<MathParent/>}></Route>
     </Routes>
     </div>
   )

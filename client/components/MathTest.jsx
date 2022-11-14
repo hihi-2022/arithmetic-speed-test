@@ -6,6 +6,7 @@ function MathTest() {
   const [num2, setNum2] = useState(randomNum(10,99))
   const [answer, setAnswer] = useState('')
   const [count, setCount] =useState(0)
+  const [timeDone, setTimeDone] = useState(false)
 
   const refreshQuestion = () =>{
     setNum1(randomNum(10,99))
@@ -30,7 +31,6 @@ function MathTest() {
   },[num1])
 
   return (
-    <div>
       <div className=" text-center">
         <h2>Math</h2>
           <h2 className="mt-16 text-xl">Correct answers: {count}</h2>
@@ -43,7 +43,6 @@ function MathTest() {
           {/* <input type="submit" hidden/> */}
         </form>
       </div>
-    </div>
   )
 }
 
