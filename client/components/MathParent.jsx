@@ -8,11 +8,13 @@ function MathParent() {
     useEffect(()=>{
       setTimeout(()=>{
         setTimeDone(true)
-      }, 6000)
+      }, 1000)
     },[])
   return (
     <div>
-      {!timeDone && <MathTest />}
+      {/* {!timeDone && <MathTest />}
+      {timeDone && <FinishScreen />} */}
+      <FinishScreen />
     </div>
   )
 }
