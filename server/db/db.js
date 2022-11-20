@@ -3,9 +3,9 @@ const config = require('./knexfile')[environment]
 const connection = require('knex')(config)
 
 module.exports = {
-  getWidgets,
+  getScores,
 }
 
-function getWidgets(db = connection) {
-  return db('widgets').select()
+function getScores(db = connection) {
+  return db('scores').select()
 }
