@@ -11,6 +11,7 @@ function MathTest() {
   const [started, setStarted] = useState(false)
   const [timesUp, setTimesUp] = useState(false)
   const [timerAnimation, setTimerAnimation] = useState('')
+  const [inputAnimation, setInputAnimation] = useState('')
 
   const refreshQuestion = () =>{
     setNum1(randomNum(10,99))
@@ -35,6 +36,8 @@ function MathTest() {
 
     if (Number(input)===num1+num2){
       setCount(count+1)
+    } else {
+      setInputAnimation('focus:border-2 focus:border-red-600 animate-[wobble_0.2s_ease-in-out]')
     }
     refreshQuestion()
     setInput('')
@@ -42,6 +45,10 @@ function MathTest() {
 
   const handleChange = (e) =>{
     setInput(e.target.value)
+  }
+
+  const resetInputAnimation = (e) => {
+    setInputAnimation('')
   }
 
   console.log(num1+num2)
@@ -63,8 +70,8 @@ function MathTest() {
             </div>
           </div>
           
-          <form onSubmit={handleSubmit} className="w-1/3 mx-auto mt-5 border border-slate-400 animate-[wobble_0.15s]">
-            <input type="text" name="answer" value={input} onChange={handleChange} className="w-full"/>
+          <form onSubmit={handleSubmit} className={`w-1/3 mx-auto mt-5 border`}>
+            <input type="text" name="answer" value={input} onChange={handleChange} className={`w-full focus:outline-0 border ${inputAnimation}`} onAnimationEnd={resetInputAnimation}/>
           </form>
         </div> : <FinishScreen score={count}/>
     
