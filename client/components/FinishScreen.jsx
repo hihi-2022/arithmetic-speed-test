@@ -1,9 +1,10 @@
 import React from "react";
 
-function FinishScreen() {
+function FinishScreen({score}) {
+  console.log(score);
   return (
-    <div className="flex justify-center">
-      <h2 >FinishScreen</h2>
+    <div className=" bg-white w-1/2 mx-auto mt-24 h-60 flex justify-center items-center">
+      <h2>Your score: {score}</h2>
     </div>
   )
 }

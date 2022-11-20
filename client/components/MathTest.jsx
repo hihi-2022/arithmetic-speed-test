@@ -50,7 +50,7 @@ function MathTest() {
   },[])
 
   return (  
-      !timesUp ? 
+      timesUp ? 
         <div className=" text-center">
           <h2>Math</h2>
           <h2 className="mt-16 text-xl">Correct answers: {count}</h2>
@@ -65,7 +65,7 @@ function MathTest() {
           <form onSubmit={handleSubmit} className=" w-1/3 mx-auto mt-5 border border-slate-400">
             <input type="text" name="answer" value={input} onChange={handleChange} className="w-full"/>
           </form>
-        </div> : <FinishScreen />
+        </div> : <FinishScreen score={count}/>
     
   )
 }
