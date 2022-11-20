@@ -4,7 +4,8 @@ const connection = require('knex')(config)
 
 module.exports = {
   getScores,
-  saveScore
+  saveScore,
+  updateName
 }
 
 function getScores(db = connection) {
@@ -13,4 +14,8 @@ function getScores(db = connection) {
 
 function saveScore(name,score,db=connection){
   return db('scores').insert({name,score})
+}
+
+function updateName(id,name, db=connection){
+  return db('scores').where('id',id).update({name})
 }
