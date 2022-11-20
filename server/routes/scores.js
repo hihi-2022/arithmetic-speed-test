@@ -13,6 +13,17 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/top/:len', (req, res) => {
+  const {len} = req.params
+  db.getTopScores(len)
+    .then((scores) => {
+      res.json(scores)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
+})
+
 router.post('/', (req,res)=>{
   const {name,score} = req.body
   db.saveScore(name,score)
