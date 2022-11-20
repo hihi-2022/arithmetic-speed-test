@@ -1,12 +1,19 @@
 import React, {useState, useEffect} from "react";
 import request from "superagent";
+import { useNavigate } from "react-router-dom"
 
 function FinishScreen({score}) {
+  const navigate = useNavigate()
   const [scoreId, setScoreId] = useState(0)
   const [showSaveForm, setShowSaveForm] = useState(false)
-  const handleSaveClick = () =>{
+
+  const yesClick = () =>{
     setShowSaveForm(true)
     console.log(scoreId);
+  }
+
+  const noClick = () =>{
+    navigate('/')
   }
   const handleNameSubmit = async (e)=>{
     e.preventDefault()
@@ -14,6 +21,7 @@ function FinishScreen({score}) {
     console.log(name);
     console.log(scoreId);
     await request.patch('/api/v1/scores/'+scoreId).send({name})
+    navigate('/leaderboard')
   }
 
   useEffect(async ()=>{
@@ -25,7 +33,9 @@ function FinishScreen({score}) {
   return (
     <div className=" bg-blue-300 w-1/2 mx-auto mt-24 h-60 flex justify-center flex-col items-center">
       <h2>Your score: {score}</h2>
-      <button onClick={handleSaveClick} className=" bg-pink-400">Save score</button>
+      <p>Would you like to save your score?</p>
+      <button onClick={yesClick} className=" bg-pink-400">Yes</button>
+      <button onClick={noClick}>No</button>
       {showSaveForm && 
         <form onSubmit={handleNameSubmit}>
           <input type="text" name="name"/>
