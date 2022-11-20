@@ -23,8 +23,9 @@ router.post('/', (req,res)=>{
     })
 })
 
-router.patch('/', (req,res)=>{
-  const {id, name} = req.body
+router.patch('/:id', (req,res)=>{
+  const {id} = req.params
+  const {name} = req.body
   db.updateName(id, name)
     .then(()=>{
       res.status(200).json()
