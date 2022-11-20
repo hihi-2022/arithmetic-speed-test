@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import FinishScreen from "./FinishScreen";
 
 function MathTest() {
+  const time = 30
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   const [num1, setNum1] = useState(randomNum(10,99))
   const [num2, setNum2] = useState(randomNum(10,99))
@@ -18,11 +19,11 @@ function MathTest() {
 
   const startGame = () =>{
     setStarted(true)
-    setTimerAnimation('animate-[shrink_2s_linear_forwards]')
+    setTimerAnimation(`animate-[shrink_${time}s_linear_forwards]`)
     setTimeout(()=>{
       setTimesUp(true)
       console.log("Time's up!")
-    }, 2000)
+    }, time*1000)
     
   }
 
@@ -50,7 +51,7 @@ function MathTest() {
   },[])
 
   return (  
-      timesUp ? 
+      !timesUp ? 
         <div className=" text-center">
           <h2>Math</h2>
           <h2 className="mt-16 text-xl">Correct answers: {count}</h2>
@@ -62,7 +63,7 @@ function MathTest() {
             </div>
           </div>
           
-          <form onSubmit={handleSubmit} className=" w-1/3 mx-auto mt-5 border border-slate-400">
+          <form onSubmit={handleSubmit} className="w-1/3 mx-auto mt-5 border border-slate-400 animate-[wobble_0.15s]">
             <input type="text" name="answer" value={input} onChange={handleChange} className="w-full"/>
           </form>
         </div> : <FinishScreen score={count}/>
