@@ -15,7 +15,14 @@ export async function saveAnonymousScore(score){
 
 export async function getTopScore(scoreNum){
   const response = await request.get('/api/v1/scores/top/'+scoreNum)
-    const data = await response.body
-    console.log(data);
-    return data
+  const data = await response.body
+  console.log(data);
+  return data
+}
+
+export async function getRandomParagraphs(){
+  const response = await request.get('http://metaphorpsum.com/paragraphs/2?p=true')
+  const text = response.text
+  console.log(response)
+  return text
 }
