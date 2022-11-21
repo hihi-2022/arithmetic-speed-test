@@ -8,12 +8,13 @@ function TypingTest() {
   const [typedText, setTypedText] = useState('')
   const [time, setTime] = useState(0)
   const [myInterval, setmyInterval] = useState(0)
+  // const [currentChar, SetcurrentChar] = useState('')
 
   const handleChange = (e) =>{
     const inputValue = e.target.value 
     const char = inputValue.charAt(inputValue.length-1)
     if (char===textToType.charAt(0)){
-      setTextToType(textToType.substring(1))
+      setTextToType(text=>text.substring(1))
       setTypedText(typedText+char)
     }
   }
@@ -46,8 +47,10 @@ function TypingTest() {
 
   
   useEffect(async () => {
-    const data = await getRandomParagraphs()
-    setTextToType(data)
+    const text = await getRandomParagraphs()
+    setTextToType(text)
+    // SetcurrentChar(text.charAt(0))
+
     const interval = setInterval(()=>{
       setTime(time=>time+1)
     },1000)
@@ -63,19 +66,20 @@ function TypingTest() {
         <input type="number" name="time"/>
       </form> */}
 
-      <h2 className=" text-center">{timerRender(time)}</h2>
+      <h2 className=" text-center">Time: {timerRender(time)}</h2>
       <h2 className=" text-center">Your typing speed: {typingSpeed(typedText, time)}</h2>
       <div className=" w-1/2 mx-auto mt-5 bg-white p-4 rounded-md" onClick={handleClick}>
         <p> 
           <span className=" text-red-500">{typedText}</span>
-          <span className=" animate-[flicker_1s_infinite]">|</span> 
-          {textToType}
+          <span className=" bg-blue-300">{textToType.charAt(0)}</span>
+          {/* <span className=" animate-[flicker_1s_infinite]">|</span>  */}
+          {textToType.substring(1)}
         </p>
       </div>
 
       <button onClick={stop} className=" border bg-red-400 mt-5">Stop</button>
 
-      <form className=" opacity-0">
+      <form className=" ">
         <input type="text" autoFocus ref={inputRef} onChange={handleChange} className=" "/>
       </form>
     </div>
