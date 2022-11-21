@@ -44,7 +44,8 @@ function TypingTest() {
       <h2>TypingTest</h2>
       <div className=" w-1/2 mx-auto mt-5 bg-white p-4 rounded-md">
         <p> 
-          <span className=" text-red-500">{typedText}</span> 
+          <span className=" text-red-500">{typedText}</span>
+          <span className=" animate-[flicker_1s_infinite]">|</span> 
           {textToType}
         </p>
       </div>

@@ -15,6 +15,10 @@ module.exports = {
           '75%':{transform: 'translateX(-2px)'},
           '87.5%':{transform: 'translateX(2px)'},
           '100%':{transform: 'translateX(0)'},
+        },
+        flicker:{
+          '0%, 35%': {opacity: '0%'},
+          '36%,100%':{opacity:'100%'}
         }
       },
     },
