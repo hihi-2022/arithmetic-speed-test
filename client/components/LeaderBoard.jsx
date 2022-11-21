@@ -1,13 +1,11 @@
 import React, {useState,useEffect} from "react";
-import request from "superagent";
+import { getTopScore } from "../apiClient";
 
 function LeaderBoard() {
   const [scores, setScores] = useState([])
   useEffect(async()=>{
-    const response = await request.get('/api/v1/scores/top/20')
-    const data = await response.body
+    const data = await getTopScore(20)
     setScores(data)
-    console.log(data);
   },[])
   return (
     <div className=" bg-white w-4/6 mx-auto mt-24 text-center p-5">

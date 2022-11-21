@@ -7,8 +7,8 @@ exports.seed = (knex) => {
       return knex('scores').insert([
         {
           id: 1,
-          name: 'Tom',
-          score: 10,
+          name: 'Louis',
+          score: 1,
         },
         {
           id: 2,

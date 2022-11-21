@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import request from "superagent";
+import { saveAnonymousScore, saveScore } from "../apiClient";
 import { useNavigate } from "react-router-dom"
 
 function FinishScreen({score}) {
@@ -20,13 +20,12 @@ function FinishScreen({score}) {
     const name = e.target.name.value
     console.log(name);
     console.log(scoreId);
-    await request.patch('/api/v1/scores/'+scoreId).send({name})
+    await saveScore(name, scoreId)
     navigate('/leaderboard')
   }
 
   useEffect(async ()=>{
-    const response = await request.post('/api/v1/scores').send({name:'anonymous', score})
-    const id = await response.body.id[0]
+    const id = await saveAnonymousScore(score)
     setScoreId(id)
   },[])
 

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import FinishScreen from "./FinishScreen";
 
 function MathTest() {
-  const time = 30
+  const time = 3
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   const [num1, setNum1] = useState(randomNum(10,99))
   const [num2, setNum2] = useState(randomNum(10,99))
