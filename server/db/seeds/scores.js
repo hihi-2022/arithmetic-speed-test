@@ -8,17 +8,7 @@ exports.seed = (knex) => {
         {
           id: 1,
           name: 'Louis',
-          score: 1,
-        },
-        {
-          id: 2,
-          name: 'Amy',
-          score: 8,
-        },
-        {
-          id: 3,
-          name: 'Alice',
-          score: 5,
+          score: 0,
         },
       ])
     })
