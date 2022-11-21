@@ -20,8 +20,10 @@ function FinishScreen({score}) {
     const name = e.target.name.value
     console.log(name);
     console.log(scoreId);
-    await saveScore(name, scoreId)
-    navigate('/leaderboard')
+    if (name) {
+      await saveScore(name, scoreId)
+      navigate('/leaderboard')
+    }
   }
 
   useEffect(async ()=>{
