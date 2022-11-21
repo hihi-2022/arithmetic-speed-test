@@ -7,7 +7,7 @@ function TypingTest() {
   const [textToType, setTextToType] = useState('')
   const [typedText, setTypedText] = useState('')
   const [time, setTime] = useState(0)
-
+  const [myInterval, setmyInterval] = useState(0)
 
   const handleChange = (e) =>{
     const inputValue = e.target.value 
@@ -22,6 +22,11 @@ function TypingTest() {
     inputRef.current.focus()
   }
 
+  const stop = () =>{
+    console.log(myInterval)
+    clearInterval(myInterval)
+  }
+
   const timerRender = (seconds) =>{
     const minute = Math.floor(seconds/60)
     const remainSeconds = seconds%60
@@ -30,16 +35,27 @@ function TypingTest() {
     return minuteString+':'+secondString
   }
   
+  const typingSpeed = (text, time) =>{
+    const minute = time/60
+    const spaces = text.match(/([\s]+)/g)  //get all spaces
+    if (spaces) {
+      const wordNum = spaces.length +1
+      return Math.floor(wordNum/minute)
+    } else {return 0}
+  }
+
+  
   useEffect(async () => {
     const data = await getRandomParagraphs()
     setTextToType(data)
     const interval = setInterval(()=>{
       setTime(time=>time+1)
     },1000)
+    setmyInterval(interval)
   },[])
 
   return (
-    <div>
+    <div className=" text-center">
       <h2>TypingTest</h2>
 
       {/* <form onSubmit={handleSubmit}>
@@ -48,6 +64,7 @@ function TypingTest() {
       </form> */}
 
       <h2 className=" text-center">{timerRender(time)}</h2>
+      <h2 className=" text-center">Your typing speed: {typingSpeed(typedText, time)}</h2>
       <div className=" w-1/2 mx-auto mt-5 bg-white p-4 rounded-md" onClick={handleClick}>
         <p> 
           <span className=" text-red-500">{typedText}</span>
@@ -55,6 +72,9 @@ function TypingTest() {
           {textToType}
         </p>
       </div>
+
+      <button onClick={stop} className=" border bg-red-400 mt-5">Stop</button>
+
       <form className=" opacity-0">
         <input type="text" autoFocus ref={inputRef} onChange={handleChange} className=" "/>
       </form>
