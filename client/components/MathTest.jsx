@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import FinishScreen from "./FinishScreen";
 
 function MathTest() {
-  const time = 1
+  const time = 30
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   const [num1, setNum1] = useState(randomNum(10,99))
   const [num2, setNum2] = useState(randomNum(10,99))
@@ -20,7 +20,7 @@ function MathTest() {
 
   const startGame = () =>{
     setStarted(true)
-    setTimerAnimation(`animate-[shrink_${time}s_linear_forwards]`)
+    setTimerAnimation('animate-[shrink_'+ time +'s_linear_forwards]')
     setTimeout(()=>{
       setTimesUp(true)
       console.log("Time's up!")
@@ -63,15 +63,15 @@ function MathTest() {
           <h2>Math</h2>
           <h2 className="mt-16 text-xl">Correct answers: {count}</h2>
           {timesUp && <p>Stop!</p>}
-          <div className=" w-1/3 mx-auto mt-5">
+          <div className=" w-96 mx-auto mt-5">
             <div className={` bg-red-500 h-1 w-full ${timerAnimation}`}></div>
             <div className=" bg-white p-4 rounded-md h-36 flex items-center justify-center">
               <h2 className=" text-4xl">{num1} + {num2}</h2> 
             </div>
           </div>
           
-          <form onSubmit={handleSubmit} className={`w-1/3 mx-auto mt-5 border`}>
-            <input type="text" name="answer" value={input} onChange={handleChange} className={`w-full focus:outline-0 border ${inputAnimation}`} onAnimationEnd={resetInputAnimation}/>
+          <form onSubmit={handleSubmit} className={`w-96 mx-auto mt-5 border`}>
+            <input type="text" name="answer" value={input} onChange={handleChange} className={`w-full focus:outline-0 border border-gray-400 ${inputAnimation}`} onAnimationEnd={resetInputAnimation}/>
           </form>
         </div> : <FinishScreen score={count}/>
     
