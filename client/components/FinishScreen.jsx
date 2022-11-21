@@ -31,12 +31,9 @@ function FinishScreen({score}) {
     const id = await saveAnonymousScore(score)
     setScoreId(id)
     const topScores = await getTopScore(20)
-    const findScoreResult = topScores.find(topScore => {
-      console.log(topScore.score, score)
-      return topScore.score < score
-    })
+    const findScoreResult = topScores.find(topScore => topScore.score < score)
     console.log(findScoreResult)
-    setIsHighScore(Boolean(findScoreResult))
+    setIsHighScore(Boolean(findScoreResult || topScores.length<20))
   },[])
 
   return (

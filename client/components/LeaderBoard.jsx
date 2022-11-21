@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from "react";
 import { getTopScore } from "../apiClient";
+import {Link} from 'react-router-dom'
 
 function LeaderBoard() {
   const [scores, setScores] = useState([])
@@ -26,6 +27,7 @@ function LeaderBoard() {
         )} 
         </tbody>
       </table>
+      <button className=" mt-5 border"><Link to="/mathtest">Play again</Link></button>
     </div>
   )
 }
