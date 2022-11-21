@@ -71,7 +71,7 @@ function TypingTest() {
 
       <button onClick={stop} className=" border bg-red-400 mt-5">Stop</button>
 
-      <form className=" ">
+      <form className=" opacity-0">
         <input type="text" autoFocus ref={inputRef} onChange={handleChange} className=" "/>
       </form>
     </div>
