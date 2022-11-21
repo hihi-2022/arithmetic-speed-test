@@ -8,7 +8,6 @@ function TypingTest() {
   const [typedText, setTypedText] = useState('')
   const [time, setTime] = useState(0)
   const [myInterval, setmyInterval] = useState(0)
-  // const [currentChar, SetcurrentChar] = useState('')
 
   const handleChange = (e) =>{
     const inputValue = e.target.value 
@@ -49,7 +48,6 @@ function TypingTest() {
   useEffect(async () => {
     const text = await getRandomParagraphs()
     setTextToType(text)
-    // SetcurrentChar(text.charAt(0))
 
     const interval = setInterval(()=>{
       setTime(time=>time+1)
@@ -61,18 +59,12 @@ function TypingTest() {
     <div className=" text-center">
       <h2>TypingTest</h2>
 
-      {/* <form onSubmit={handleSubmit}>
-        <label htmlFor="time">Set time</label>
-        <input type="number" name="time"/>
-      </form> */}
-
       <h2 className=" text-center">Time: {timerRender(time)}</h2>
       <h2 className=" text-center">Your typing speed: {typingSpeed(typedText, time)}</h2>
       <div className=" w-1/2 mx-auto mt-5 bg-white p-4 rounded-md" onClick={handleClick}>
         <p> 
           <span className=" text-red-500">{typedText}</span>
           <span className=" bg-blue-300">{textToType.charAt(0)}</span>
-          {/* <span className=" animate-[flicker_1s_infinite]">|</span>  */}
           {textToType.substring(1)}
         </p>
       </div>
