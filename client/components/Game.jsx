@@ -6,6 +6,7 @@ function Game () {
   const [y, setY] = useState(0)
   const [count, setCount] = useState(0)
   const [squares, setSquares] = useState([])
+  // let y1 = 0
   // let startedX  = 0
   // let startedY = 0
   // const [startedX, setStartedX] = useState(0)
@@ -40,8 +41,12 @@ function Game () {
           break;
         case 32:
           setCount(count=>count+1)
-          setSquares(squares=>[...squares,0])
-          console.log(count)
+          setY1(y)
+          setSquares(squares=>[...squares, {
+            top: y
+          }])
+          // y1 = y
+          // console.log(getTop())
         default:
           break;
       }
@@ -80,9 +85,9 @@ function Game () {
   //   }
   // }
 
-  const handleKeyUp = () =>{
+  // const handleKeyUp = () =>{
     // clearInterval(myInterval)
-  }
+  // }
 
   // const [style, setStyle] = useState({
   //   width: '10px',
@@ -90,22 +95,17 @@ function Game () {
   //   backgroundColor: 'black'
   // })
 
-  const style = {
-    // transform: 'translate(10px)',
-    width: '10px',
-    height:'10px',
-    backgroundColor: 'black'
-  }
+  const [y1, setY1] = useState(y)
 
   return (
-    <div onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex={-1}>
+    <div onKeyDown={handleKeyDown} tabIndex={-1}>
       {/* <form>
         <input type="text" onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex="0"/>
       </form> */}
       <h2>Game</h2>
-      <div className=" flex justify-start flex-col w-64 h-36 bg-white mx-auto" >
-        <div style={{...style, transform:`translate(${x}px, ${y}px)`}}></div>
-        {squares.map(square=> <div style={{...style}} className=" top-0 left-0 animate-[goleft_5s_linear_forwards]"></div>)}
+      <div className=" relative w-64 h-36 bg-white mx-auto" >
+        <div style={{transform:`translate(${x}px, ${y}px)`}} className="w-3 h-3 bg-black"></div>
+        {squares.map(square=> <div style={{top:square.top+'px'}} className="w-3 h-3 bg-black absolute animate-[goleft_5s_linear_forwards]"></div>)}
        
         {/* <div style={{...style}} className=" animate-[goleft_5s_linear_forwards]"></div> */}
         {/* <div style={style}></div> */}
