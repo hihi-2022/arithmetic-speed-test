@@ -5,6 +5,7 @@ import MathTest from './MathTest'
 import Home from './Home'
 import LeaderBoard from './LeaderBoard'
 import TypingTest from './TypingTest'
+import Game from './Game'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path='/mathtest' element={<MathTest/>}/>
       <Route path='/leaderboard' element={<LeaderBoard />}/>
       <Route path='/typingtest' element={<TypingTest />}/>
+      <Route path='/game' element={<Game />}/>
     </Routes>
     </div>
   )
