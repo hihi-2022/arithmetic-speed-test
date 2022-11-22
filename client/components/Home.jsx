@@ -6,7 +6,8 @@ function Home() {
     <div>
       {/* <h2>Home</h2> */}
       <Link to='/mathtest'>Go to Math</Link> <br></br>
-      <Link to='typingtest'>Go to typing test</Link>
+      <Link to='/typingtest'>Go to typing test</Link> <br></br>
+      <Link to='/game'>Go to game</Link>
     </div>
   )
 }
