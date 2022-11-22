@@ -1,8 +1,15 @@
 import React, {useState} from "react";
 
 function Game () {
+  const speed = 4
   const [x, setX] = useState(0)
   const [y, setY] = useState(0)
+  const [count, setCount] = useState(0)
+  const [squares, setSquares] = useState([])
+  // let startedX  = 0
+  // let startedY = 0
+  // const [startedX, setStartedX] = useState(0)
+  // const [startedY, setStartedY] = useState(0)
   // const [myInterval, setmyInterval] = useState(0)
 
   const handleKeyDown = (e) =>{
@@ -14,26 +21,29 @@ function Game () {
       switch (e.keyCode) {
         //left
         case 37:
-          setX(x=>x-1)
+          setX(x=>x-speed)
           break;
 
         //up
         case 38:
-          setY(y=>y-1)
+          setY(y=>y-speed)
           break;
 
         //right
         case 39:
-          setX(x=>x+1)
+          setX(x=>x+speed)
           break;
 
           //down
         case 40:
-          setY(y=>y+1)
+          setY(y=>y+speed)
           break;
+        case 32:
+          setCount(count=>count+1)
+          setSquares(squares=>[...squares,0])
+          console.log(count)
         default:
           break;
-      setX(value=>value+10)
       }
     //   move(e.keyCode)
     // , 100)
@@ -88,13 +98,16 @@ function Game () {
   }
 
   return (
-    <div onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} autoFocus tabIndex={-1}>
+    <div onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex={-1}>
       {/* <form>
         <input type="text" onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex="0"/>
       </form> */}
       <h2>Game</h2>
-      <div className=" w-64 h-36 bg-white mx-auto">
+      <div className=" flex justify-start flex-col w-64 h-36 bg-white mx-auto" >
         <div style={{...style, transform:`translate(${x}px, ${y}px)`}}></div>
+        {squares.map(square=> <div style={{...style}} className=" top-0 left-0 animate-[goleft_5s_linear_forwards]"></div>)}
+       
+        {/* <div style={{...style}} className=" animate-[goleft_5s_linear_forwards]"></div> */}
         {/* <div style={style}></div> */}
         {/* <div className={'w-2 h-2 bg-black translate-x-['+x+'px] translate-y-['+y+'px]'}></div> */}
         {/* <div className={`w-2 h-2 bg-black translate-x-[10px] translate-y-[20px]`}></div> */}

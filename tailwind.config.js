@@ -19,6 +19,10 @@ module.exports = {
         flicker:{
           '0%, 35%': {opacity: '0%'},
           '36%,100%':{opacity:'100%'}
+        },
+        goleft:{
+          '0%':{transform:'translate(0,0)'},
+          '100%':{transform:'translate(200px,0)'}
         }
       },
     },
