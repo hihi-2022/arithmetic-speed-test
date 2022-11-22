@@ -6,6 +6,7 @@ import Home from './Home'
 import LeaderBoard from './LeaderBoard'
 import TypingTest from './TypingTest'
 import Game from './Game'
+import Snake from './Snake'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path='/leaderboard' element={<LeaderBoard />}/>
       <Route path='/typingtest' element={<TypingTest />}/>
       <Route path='/game' element={<Game />}/>
+      <Route path='/snake' element={<Snake />}/>
     </Routes>
     </div>
   )
