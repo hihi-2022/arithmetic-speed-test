@@ -22,7 +22,7 @@ module.exports = {
         },
         goleft:{
           '0%':{transform:'translate(0,0)'},
-          '100%':{transform:'translate(200px,0)'}
+          '100%':{transform:'translate(300px,0)'}
         }
       },
     },
