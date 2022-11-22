@@ -10,14 +10,6 @@ function Snake() {
   const gridData = Array(8).fill().map(()=>Array(8).fill({...cell}))
   const [grid, setGrid] = useState(gridData)
 
-  const handleKeyDown = (e) =>{
-    console.log(e.keyCode);
-  }
-  
-  const handleClick = () =>{
-    setSnake([[3,3]])
-  }
-
   const makeGrid = (snake) =>{
     const newGrid = [...gridData]
     snake.forEach(item => {
@@ -27,6 +19,39 @@ function Snake() {
     });
     return newGrid
   }
+
+  const moveSnake = (direction) =>{
+    switch (direction) {
+      case 'up':
+        snake[0][0]--
+        setSnake([...snake])
+        break;
+      case 'down':
+        snake[0][0]++
+        setSnake([...snake])
+        break;
+      case 'left':
+        snake[0][1]--
+        setSnake([...snake])
+    
+        break;
+      case 'right':
+        snake[0][1]++
+        setSnake([...snake])
+        break;    
+      default:
+        break;
+    }
+  }
+
+  const handleKeyDown = (e) =>{
+    console.log(e.keyCode);
+  }
+  
+  const handleClick = () =>{
+    moveSnake(snake,'up')
+  }
+
 
   useEffect(()=>{
     // console.log({snake, grid})
@@ -48,7 +73,10 @@ function Snake() {
             )}
         </div>
       )}
-      <button onClick={handleClick}>change color</button>
+      <button onClick={()=>{moveSnake('up')}}>Up</button>
+      <button onClick={()=>{moveSnake('down')}}>down</button>
+      <button onClick={()=>{moveSnake('right')}}>right</button>
+      <button onClick={()=>{moveSnake('left')}}>left</button>
     </div>
   )
 }
