@@ -26,7 +26,7 @@ function Snake() {
   }
 
   const moveSnake = (direction) =>{
-    const head = snake[0]
+    const head = [...snake[0]]
     switch (direction) {
       case 'up':
         head[0]--
@@ -47,14 +47,17 @@ function Snake() {
         break;    
       default:
         break;
-      snake.unshift(head)
-      setSnake([...snake])
-    const hitFood = head.every((cordinate, index)=> cordinate === food)
-    if (hitFood) {
+      }
+    snake.unshift(head)
+    console.log(snake)
+    const hitFood = head.every((cordinate, index)=> cordinate === food[index])
+    if (!hitFood) {
+      snake.pop()
+
     } else {
 
     } 
-    }
+    setSnake([...snake])
   }
 
   const handleKeyDown = (e) =>{
