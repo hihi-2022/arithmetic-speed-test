@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 
 function Snake() {
   const [snake, setSnake] = useState([[4,4]])
+  const [food, setFood] = useState([4,3])
   const cell = {
     backgroundColor: 'blue'
   }
@@ -10,13 +11,17 @@ function Snake() {
   const gridData = Array(8).fill().map(()=>Array(8).fill({...cell}))
   const [grid, setGrid] = useState(gridData)
 
-  const makeGrid = (snake) =>{
+  const makeGrid = () =>{
     const newGrid = [...gridData]
-    snake.forEach(item => {
-      const x=snake[0][0]
-      const y = snake[0][1]
-      newGrid[x][y]={backgroundColor:'red'}
+    snake.forEach(snakePart => {
+      const row = snakePart[0]
+      const col = snakePart[1]
+      newGrid[row][col]={backgroundColor:'red'}
     });
+    const row = food[0]
+    const col = food[1]
+    newGrid[row][col] = {backgroundColor:'green'}
+
     return newGrid
   }
 
