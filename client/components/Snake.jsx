@@ -26,26 +26,34 @@ function Snake() {
   }
 
   const moveSnake = (direction) =>{
+    const head = snake[0]
     switch (direction) {
       case 'up':
-        snake[0][0]--
-        setSnake([...snake])
+        head[0]--
+        // setSnake([...snake])
         break;
       case 'down':
-        snake[0][0]++
-        setSnake([...snake])
+        head[0]++
+        // setSnake([...snake])
         break;
       case 'left':
-        snake[0][1]--
-        setSnake([...snake])
+        head[1]--
+        // setSnake([...snake])
     
         break;
       case 'right':
-        snake[0][1]++
-        setSnake([...snake])
+        head[1]++
+        // setSnake([...snake])
         break;    
       default:
         break;
+      snake.unshift(head)
+      setSnake([...snake])
+    const hitFood = head.every((cordinate, index)=> cordinate === food)
+    if (hitFood) {
+    } else {
+
+    } 
     }
   }
 
