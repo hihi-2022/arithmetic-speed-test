@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 function Snake() {
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   const [snake, setSnake] = useState([[4,4]])
-  const [food, setFood] = useState([0,0])
+  const [food, setFood] = useState(makeFood())
   const cell = {
     backgroundColor: 'blue'
   }
@@ -51,25 +51,32 @@ function Snake() {
       }
     snake.unshift(head)
     const hitFood = head.every((cordinate, index)=> cordinate === food[index])
-    if (!hitFood) {
+    if (hitFood) {
+      setFood(makeFood())
+    } else {
       snake.pop()
+    }
     setSnake([...snake])
   }
-  }
 
-  const makeFood = () =>{
+  function makeFood () {
+    const indexArr = []
+    for (let i = 0; i < 7; i++) {
+      indexArr.push[i]  
+    }
+    snake.
     const row = randomNum(0,7)
     const col = randomNum (0,7)
-    setFood([row, col])
+    return [row, col]
   }
 
   const handleKeyDown = (e) =>{
     console.log(e.keyCode);
   }
   
-  const handleClick = () =>{
-    moveSnake(snake,'up')
-  }
+  // const handleClick = () =>{
+  //   moveSnake(snake,'up')
+  // }
 
 
   useEffect(()=>{
@@ -81,10 +88,6 @@ function Snake() {
     // setGrid([...grid])
     setGrid(makeGrid(snake))
   },[snake])
-
-  useEffect(()=>{
-    makeFood()
-  },[])
 
   
   return (
