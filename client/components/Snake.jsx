@@ -2,15 +2,32 @@
 import React, {useEffect, useState} from "react";
 
 function Snake() {
-  const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
-  const [snake, setSnake] = useState([[4,4]])
-  const [food, setFood] = useState(makeFood())
+  const gridHeight = 8
+  const gridWidth = 8
   const cell = {
     backgroundColor: 'blue'
   }
   //create a matrix
-  const gridData = Array(8).fill().map(()=>Array(8).fill({...cell}))
+  const gridData = Array(gridHeight).fill().map(()=>Array(gridWidth).fill({...cell}))
+  
+  //create array of cordinates
+  const cordinates = []
+  for (let i = 0; i < gridHeight; i++) {
+    for (let j = 0; j < gridWidth; j++) {
+      cordinates.push([i,j])      
+    }    
+  }
+  const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+  // const validCordinate = (cordinates, snake) => {
+  //   cordinates.forEach(cordinate => {
+      
+  //   });
+  // }
+
+
   const [grid, setGrid] = useState(gridData)
+  const [snake, setSnake] = useState([[4,4]])
+  const [food, setFood] = useState(makeFood())
 
   const makeGrid = () =>{
     const newGrid = [...gridData]
@@ -60,32 +77,29 @@ function Snake() {
   }
 
   function makeFood () {
-    const indexArr = []
-    for (let i = 0; i < 7; i++) {
-      indexArr.push[i]  
+    // console.log(snake);
+    // // console.log(cordinates);
+    // const validCordinate = cordinates.filter(cordinate => !snake.includes(cordinate))
+    
+    const validCordinates = []
+    grid.forEach((row,iRow) => {
+      row.forEach((cell, iCol)=> {
+        if (cell.backgroundColor === 'blue') {
+          validCordinates.push([iRow, iCol])
+        }
+      })
+    })
+    console.log(validCordinates);
+    const randomIndex = randomNum(0, validCordinates.length-1)
+    return validCordinates[randomIndex]
     }
-    snake.
-    const row = randomNum(0,7)
-    const col = randomNum (0,7)
-    return [row, col]
-  }
 
   const handleKeyDown = (e) =>{
     console.log(e.keyCode);
   }
   
-  // const handleClick = () =>{
-  //   moveSnake(snake,'up')
-  // }
-
 
   useEffect(()=>{
-    // console.log({snake, grid})
-    // const x=snake[0][0]
-    // const y = snake[0][1]
-    // console.log(x,y)
-    // grid[x][y]={backgroundColor:'red'}
-    // setGrid([...grid])
     setGrid(makeGrid(snake))
   },[snake])
 
