@@ -20,6 +20,7 @@ function Snake() {
   const [food, setFood] = useState(null)
   const [direction, setDirection] = useState(0)
   const [myInterval, setMyInterval] = useState(0)
+  const [gameOver, setGameOver] = useState(false)
 
   const ref = useRef(null)
 
@@ -85,6 +86,7 @@ function Snake() {
     
     //check if move is valid
     if (overEdge || selfBite(head, snake)) {
+      endGame()
       console.log('game over');
     } 
     else {
@@ -112,6 +114,7 @@ function Snake() {
 
     if (validCoordinates.length===0){
       console.log('game over');
+      endGame()
     } else {
       const randomIndex = randomNum(0, validCoordinates.length-1)
       return validCoordinates[randomIndex]
@@ -134,7 +137,7 @@ function Snake() {
   }
 
   const handleKeyDown = (e) =>{
-    console.log(e.keyCode);
+    if (gameOver) {return}
     const newDirection = getDirection(e.keyCode)
     
     if (newDirection === 0) {return}
@@ -160,6 +163,11 @@ function Snake() {
     clearInterval(myInterval)
   }
 
+  const endGame = () => {
+    setGameOver(true)
+    setGrid(gridData)
+  }
+
   useEffect(() => {
     ref.current.focus()
     setSnake([[rowNum/2, colNum/2]])
@@ -175,23 +183,30 @@ function Snake() {
   
   return (
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 ">
-      <div className=" mt-40 text-center text-lg">
-      <h2 className=" mb-3">Score: {snake?.length - 1}</h2>
-      <div className=" flex flex-col items-center bg-slate-200">
-        <div className="  border-8 border-slate-700 flex flex-col">
-          {grid.map((row,i)=>
+      <div className=" mt-40 text-center ">
+        
+        <h2 className=" mb-3 text-lg">Score: {snake?.length - 1}</h2>
+        
+        <div className=" flex flex-col items-center bg-slate-200 relative ">
+
+        {gameOver && 
+          <div className=" absolute h-full z-10 flex items-center">
+            <h1 className=" text-4xl">GAME OVER!</h1>
+          </div>
+        } 
+          <div className="  border-8 border-slate-700 flex flex-col">
+            {grid.map((row,i)=>
               <div key={i} className="flex">
                 {row.map((item, i)=>{
                   return <div key={i} className=" w-4 h-4 border-0 " style={item}></div>}
                   )}
-              </div>
-            )
-          }
+              </div>)
+            }
           </div>
         </div>
+        <button onClick={stopGame} className= " border border-slate-600 bg-slate-200 mt-6 px-2 py-1"> Pause </button>
       </div>
 
-      <button onClick={stopGame}> Stop</button>
     </div>
   )
 }
