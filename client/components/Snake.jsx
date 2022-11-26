@@ -10,20 +10,7 @@ function Snake() {
   //create a matrix
   const gridData = Array(gridHeight).fill().map(()=>Array(gridWidth).fill({...cell}))
   
-  //create array of cordinates
-  const cordinates = []
-  for (let i = 0; i < gridHeight; i++) {
-    for (let j = 0; j < gridWidth; j++) {
-      cordinates.push([i,j])      
-    }    
-  }
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
-  // const validCordinate = (cordinates, snake) => {
-  //   cordinates.forEach(cordinate => {
-      
-  //   });
-  // }
-
 
   const [grid, setGrid] = useState(gridData)
   const [snake, setSnake] = useState([[4,4]])
@@ -35,7 +22,7 @@ function Snake() {
       const row = snakePart[0]
       const col = snakePart[1]
       newGrid[row][col]={backgroundColor:'red'}
-    });
+    })
     const row = food[0]
     const col = food[1]
     newGrid[row][col] = {backgroundColor:'green'}
@@ -45,29 +32,26 @@ function Snake() {
 
   const moveSnake = (direction) =>{
     const head = [...snake[0]]
+
     switch (direction) {
       case 'up':
         head[0]--
-        // setSnake([...snake])
         break;
       case 'down':
         head[0]++
-        // setSnake([...snake])
         break;
       case 'left':
         head[1]--
-        // setSnake([...snake])
-    
         break;
       case 'right':
         head[1]++
-        // setSnake([...snake])
         break;    
       default:
         break;
       }
+
     snake.unshift(head)
-    const hitFood = head.every((cordinate, index)=> cordinate === food[index])
+    const hitFood = head.every((Coordinate, index)=> Coordinate === food[index])
     if (hitFood) {
       setFood(makeFood())
     } else {
@@ -76,22 +60,17 @@ function Snake() {
     setSnake([...snake])
   }
 
-  function makeFood () {
-    // console.log(snake);
-    // // console.log(cordinates);
-    // const validCordinate = cordinates.filter(cordinate => !snake.includes(cordinate))
-    
-    const validCordinates = []
+  function makeFood () {  
+    const validCoordinates = []
     grid.forEach((row,iRow) => {
       row.forEach((cell, iCol)=> {
         if (cell.backgroundColor === 'blue') {
-          validCordinates.push([iRow, iCol])
+          validCoordinates.push([iRow, iCol])
         }
       })
     })
-    console.log(validCordinates);
-    const randomIndex = randomNum(0, validCordinates.length-1)
-    return validCordinates[randomIndex]
+    const randomIndex = randomNum(0, validCoordinates.length-1)
+    return validCoordinates[randomIndex]
     }
 
   const handleKeyDown = (e) =>{
