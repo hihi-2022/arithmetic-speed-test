@@ -11,7 +11,7 @@ import Snake from './Snake'
 function App() {
   return (
     <div className='bg-slate-100 absolute h-full w-full'>
-      <Link to="/">Go to Home</Link>
+      <Link to="/" className='fixed z-50'>Go to Home</Link>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/mathtest' element={<MathTest/>}/>
