@@ -1,14 +1,14 @@
 
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 
 function Snake() {
-  const gridHeight = 4
-  const gridWidth = 4
+  const rowNum = 50
+  const colNum = 50
   const cell = {
     backgroundColor: 'blue'
   }
   //create a matrix
-  const gridData = Array(gridHeight).fill().map(()=>Array(gridWidth).fill({...cell}))
+  const gridData = Array(rowNum).fill().map(()=>Array(colNum).fill({...cell}))
   
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
@@ -16,6 +16,10 @@ function Snake() {
   const [snake, setSnake] = useState(null)
   const [food, setFood] = useState(null)
   const [direction, setDirection] = useState(0)
+  const [myInterval, setMyInterval] = useState(0)
+  const [myTimeOut, setMyTimeOut] = useState(0)
+
+  const ref = useRef(null)
 
   const makeGrid = () => {
     const newGrid = [...gridData]
@@ -32,33 +36,25 @@ function Snake() {
   }
 
   const selfBite = (head, snake) => {
-    //check if the head coordinates indentical with with any body part, except the tail
+    //check if the new head coordinates indentical with with any body part, except the tail
     const newSnake = [...snake]
     newSnake.pop()
     let result = false
     newSnake.forEach(snakePart => {
-      console.log(snakePart[0], head[0], snakePart[1], head[1]);
       if (snakePart[0] === head[0] && snakePart[1] === head[1]) {
         result = true
       }
     })
 
-    console.log(result);
     return result
   }
 
-  const moveSnake = (newDirection) => {
-    //not allow user to move to to the opposite direction
-    if (newDirection + direction === 0) {
-      return
-    } 
 
-    setDirection(newDirection)
-
+  const moveSnake = (direction) => {
     const head = [...snake[0]]
     let overEdge = false
 
-    switch (newDirection) {
+    switch (direction) {
       //Up
       case -1:
         head[0]--
@@ -68,7 +64,7 @@ function Snake() {
        //Down
       case 1:
         head[0]++
-        if (head[0] > gridHeight -1) {overEdge = true}
+        if (head[0] > rowNum -1) {overEdge = true}
         break;
       
       //Left
@@ -79,7 +75,7 @@ function Snake() {
       //Right
       case 2:
         head[1]++
-        if (head[1] > gridWidth -1) {overEdge = true}
+        if (head[1] > colNum -1) {overEdge = true}
         break;    
       default:
         break;
@@ -120,12 +116,51 @@ function Snake() {
     }
   }
 
+  const getDirection = (keyCode) => {
+    switch (keyCode) {
+      case 37:
+        return -2
+        case 38:
+          return -1
+      case 39:
+        return 2
+      case 40:
+        return 1 
+      default:
+        return 0;
+    }
+  }
+
   const handleKeyDown = (e) =>{
     console.log(e.keyCode);
+    const newDirection = getDirection(e.keyCode)
+    
+    if (newDirection === 0) {return}
+
+    //not allow switching to the opposite direction
+    if (newDirection + direction === 0){return}
+    setDirection(newDirection)
+    
+    //if the game is in progress (myInteral !== 0), interval need to be clear
+    if (myInterval !== 0 ) {
+      clearInterval(myInterval)
+    }
+
+    moveSnake(newDirection)
+    const interval = setInterval(() => {
+      moveSnake(newDirection)
+    }, 500);
+    setMyInterval(interval)
   }
   
+
+  const stopGame = () => {
+    clearInterval(myInterval)
+  }
+
   useEffect(() => {
-    setSnake([[0,1],[0,2],[1,2],[2,2],[3,2]])
+    ref.current.focus()
+    setSnake([[rowNum/2, colNum/2]])
     setFood(makeFood())
   },[])
 
@@ -137,18 +172,19 @@ function Snake() {
 
   
   return (
-    <div onKeyDown={handleKeyDown} tabIndex="0" className=" flex flex-col items-center">
-     {grid.map((row,i)=>
-        <div key={i} className="flex">
-          {row.map((item, i)=>{
-            return <div key={i} className=" w-8 h-8 border " style={item}></div>}
-            )}
-        </div>
-      )}
-      <button onClick={()=>{moveSnake(-1)}}> ^ </button>
-      <button onClick={()=>{moveSnake(1)}}> v </button>
-      <button onClick={()=>{moveSnake(2)}}> {'>'} </button>
-      <button onClick={()=>{moveSnake(-2)}}> {'<'} </button>
+    <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 ">
+      <div className=" mt-10 flex flex-col items-center">
+        {grid.map((row,i)=>
+            <div key={i} className="flex">
+              {row.map((item, i)=>{
+                return <div key={i} className=" w-2 h-2 border-0 " style={item}></div>}
+                )}
+            </div>
+          )
+        }
+      </div>
+
+      <button onClick={stopGame}> Stop</button>
     </div>
   )
 }
