@@ -2,10 +2,13 @@
 import React, {useEffect, useState, useRef} from "react";
 
 function Snake() {
-  const rowNum = 50
-  const colNum = 50
+  const rowNum = 20
+  const colNum = 30
+  const backgroundColor = 'rgb(226 232 240)'
+  const snakeColor = 'rgb(51 65 85)'
+  const foodColor = 'rgb(100 116 139)'
   const cell = {
-    backgroundColor: 'blue'
+    backgroundColor: backgroundColor
   }
   //create a matrix
   const gridData = Array(rowNum).fill().map(()=>Array(colNum).fill({...cell}))
@@ -17,7 +20,6 @@ function Snake() {
   const [food, setFood] = useState(null)
   const [direction, setDirection] = useState(0)
   const [myInterval, setMyInterval] = useState(0)
-  const [myTimeOut, setMyTimeOut] = useState(0)
 
   const ref = useRef(null)
 
@@ -26,11 +28,11 @@ function Snake() {
     snake.forEach(snakePart => {
       const row = snakePart[0]
       const col = snakePart[1]
-      newGrid[row][col] = {backgroundColor:'red'}
+      newGrid[row][col] = {backgroundColor: snakeColor}
     })
     const row = food[0]
     const col = food[1]
-    newGrid[row][col] = {backgroundColor:'green'}
+    newGrid[row][col] = {backgroundColor: foodColor}
 
     return newGrid
   }
@@ -102,7 +104,7 @@ function Snake() {
 
     grid.forEach((row,iRow) => {
       row.forEach((cell, iCol)=> {
-        if (cell.backgroundColor === 'blue') {
+        if (cell.backgroundColor === backgroundColor) {
           validCoordinates.push([iRow, iCol])
         }
       })
@@ -149,7 +151,7 @@ function Snake() {
     moveSnake(newDirection)
     const interval = setInterval(() => {
       moveSnake(newDirection)
-    }, 500);
+    }, 70);
     setMyInterval(interval)
   }
   
@@ -173,15 +175,20 @@ function Snake() {
   
   return (
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 ">
-      <div className=" mt-10 flex flex-col items-center">
-        {grid.map((row,i)=>
-            <div key={i} className="flex">
-              {row.map((item, i)=>{
-                return <div key={i} className=" w-2 h-2 border-0 " style={item}></div>}
-                )}
-            </div>
-          )
-        }
+      <div className=" mt-40 text-center text-lg">
+      <h2 className=" mb-3">Score: {snake?.length - 1}</h2>
+      <div className=" flex flex-col items-center bg-slate-200">
+        <div className="  border-8 border-slate-700 flex flex-col">
+          {grid.map((row,i)=>
+              <div key={i} className="flex">
+                {row.map((item, i)=>{
+                  return <div key={i} className=" w-4 h-4 border-0 " style={item}></div>}
+                  )}
+              </div>
+            )
+          }
+          </div>
+        </div>
       </div>
 
       <button onClick={stopGame}> Stop</button>
