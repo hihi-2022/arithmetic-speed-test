@@ -4,15 +4,33 @@ const MemoryTest = () => {
   const rowNum = 5
   const colNum = 8
   const hiddenCell = {backgroundColor: 'white'}
+  const activeButton = {backgroundColor: 'rgb(107 114 128)', color: 'white'}
   const cell ={
     digit: null,
     style: {}
   }
 
-  const gridData = Array(rowNum).fill().map(()=>Array(colNum).fill({...cell}))
-  // const gridDigits = Array(rowNum).fill().map(()=>Array(colNum).fill(null))
-  // const gridStyle = Array(rowNum).fill().map(()=>Array(colNum).fill({}))
+  //****** Level selection button******/
+  const [digitButtons, setDigitButton] = useState([])
+  const unstyleButtons = []
+  for (let i = 3; i < 10; i++) {
+    unstyleButtons.push({
+      digit: i
+    })  
+  }
+  // const buttonInit = () => {
+  //   const arr = []
+  //   for (let i = 3; i < 10; i++) {
+  //     arr.push({
+  //       digit: i
+  //     })  
+  //   }
+  //   setDigitButton(arr)
+  // }
 
+
+  const gridData = Array(rowNum).fill().map(()=>Array(colNum).fill({...cell}))
+  
   const allCoordinates = []
   const coordinateIndexes = []
   for (let row = 0; row < rowNum; row++) {
@@ -22,13 +40,14 @@ const MemoryTest = () => {
     }
   }
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
-
-  const [level, setLevel] = useState(4)
-
-  const getSeries = () => {
+  
+  const [digitNum, setDigitNum] = useState(3)
+  
+  const getSeries = (digitNumber) => {
+    console.log(digitNumber);
     const newSeries = []
     const indexes = [...coordinateIndexes]
-    for (let i = 0; i < level; i++) {
+    for (let i = 0; i < digitNumber; i++) {
       const randomMetaIndex = randomNum(0, indexes.length-1)
       const randomIndex = indexes[randomMetaIndex]
       newSeries.push(allCoordinates[randomIndex])
@@ -37,21 +56,18 @@ const MemoryTest = () => {
     return newSeries
   }
 
-  const [series, setSeries] = useState(getSeries())
+  const [series, setSeries] = useState(getSeries(3))
   const [grid, setGrid] = useState([...gridData])
   const [started, setStarted] = useState(false)
   const [currentDigit, setCurrentDigit] = useState(1)
 
   const makeGrid = () => {
     const newGrid = [...gridData]
-    // const newGrid = [...gridDigits]
-    // const newGridStyle = [...gridStyle]
     series.forEach((item, i) => {
       const row = item[0]
       const col = item[1]
       newGrid[row][col] = {...cell}
       newGrid[row][col].digit = i + 1
-      // gridStyle[row][col] = {...hiddenCell}
       
     })
     return newGrid
@@ -71,30 +87,50 @@ const MemoryTest = () => {
   }
   
   const handleClick = (digit, row, col) => {
-    console.log(currentDigit);
     if (!started) {
       startGame()
     }
-
+    
     if (digit === currentDigit) {
       setCurrentDigit (digit => digit + 1)
       grid[row][col].style = {opacity: 0}
+      if (digit === digitNum) {
+        console.log('finished');
+      }
     } else {
       console.log('game over');
-
     }
-
+    
+  }
+  
+  const changeLevel = (digitNumber) => {
+    setSeries(getSeries(digitNumber))
+    setDigitNum(digitNumber)
+    const index = digitNumber - 3
+    const newButtons = [...unstyleButtons]
+    newButtons[index].style = {...activeButton}
+    setDigitButton(newButtons)
   }
 
   useEffect(() => {
-    console.log(series);
+    // buttonInit()
+    setDigitButton(unstyleButtons)
+  },[])
+
+  useEffect(() => {
     setGrid(makeGrid())
   }, [series])
 
   return ( 
     <>
     <div className=" mt-24 flex flex-col items-center">
-      <h2 className=" text-xl"> Level: {level - 3} </h2>
+      {/* <h2 className=" text-xl mb-2"> Level {digitNum - 2} - {digitNum} digits </h2> */}
+      <div className=" text-lg mb-5">
+        Number of digits:
+        {
+          digitButtons.map(button => <button key={button.digit} onClick={() => {changeLevel(button.digit)}} style= {button.style} className= " bg-slate-200 text-gray-700 px-3 py-1 mx-1 text-xl hover:bg-gray-500 hover:text-white"> {button.digit} </button>)
+        }
+      </div>
       <div className="  bg-gray-700 p-1">
         {grid.map((row, iRow) =>
           <div key={iRow} className="flex">
