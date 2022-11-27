@@ -1,14 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Card = ({title}) => {
-
+const Card = ({content}) => {
+  const {route, description, img} = content
   return ( 
-    // <Link to={link}>
-      <div className=" w-36">
-        <h1> {title} </h1>
-        <img src="https://images.twinkl.co.uk/tw1n/image/private/t_630/image_repo/66/0a/T-M-364-display-numbers-black.jpg" alt="math" className=" object-cover"/>
+    <Link to= {route}>
+      <div className=" w-80 h-60 hover:shadow-2xl transition-all duration-150 shadow-md shadow-gray-400 bg-white rounded-md overflow-hidden">
+        <h1 className=" text-xl p-3"> {description} </h1>
+        <img src= {img} className=" object-cover"/>
       </div>
-    // </Link>
+     </Link>
    );
 }
  
