@@ -1,4 +1,3 @@
-import userEvent from "@testing-library/user-event";
 import React, {useEffect, useState, useRef} from "react";
 import {getRandomParagraphs} from '../apiClient'
 
@@ -8,8 +7,10 @@ function TypingTest() {
   const [typedText, setTypedText] = useState('')
   const [time, setTime] = useState(0)
   const [myInterval, setmyInterval] = useState(0)
+  const [started, setStarted] = useState(false)
 
   const handleChange = (e) =>{
+    if (!started) {start()}
     const inputValue = e.target.value 
     const char = inputValue.charAt(inputValue.length-1)
     if (char===textToType.charAt(0)){
@@ -20,6 +21,14 @@ function TypingTest() {
 
   const handleClick = () =>{
     inputRef.current.focus()
+  }
+
+  const start = () => {
+    setStarted(true)
+    const interval = setInterval(()=>{
+      setTime(time=>time+1)
+    },1000)
+    setmyInterval(interval)
   }
 
   const stop = () =>{
@@ -48,11 +57,6 @@ function TypingTest() {
   useEffect(async () => {
     const text = await getRandomParagraphs()
     setTextToType(text)
-
-    const interval = setInterval(()=>{
-      setTime(time=>time+1)
-    },1000)
-    setmyInterval(interval)
   },[])
 
   return (
