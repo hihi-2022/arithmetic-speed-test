@@ -208,7 +208,7 @@ function Snake() {
 
   useEffect(() => {
     if (snake){
-      setGrid(makeGrid(snake))
+      setGrid(makeGrid())
     }
   },[snake])
 
