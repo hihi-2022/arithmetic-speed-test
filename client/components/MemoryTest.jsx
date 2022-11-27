@@ -30,7 +30,7 @@ const MemoryTest = () => {
       const randomMetaIndex = randomNum(0, indexes.length-1)
       const randomIndex = indexes[randomMetaIndex]
       newSeries.push(allCoordinates[randomIndex])
-      indexes.slice(randomMetaIndex, 1)         
+      indexes.splice(randomMetaIndex, 1) 
     }
     return newSeries
   }
@@ -38,6 +38,7 @@ const MemoryTest = () => {
   const [series, setSeries] = useState(getSeries())
   const [grid, setGrid] = useState([...gridData])
   const [started, setStarted] = useState(false)
+  const [currentDigit, setCurrentDigit] = useState(1)
 
   const makeGrid = () => {
     const newGrid = [...gridData]
@@ -51,7 +52,6 @@ const MemoryTest = () => {
       // gridStyle[row][col] = {...hiddenCell}
       
     })
-    console.log(newGrid);
     return newGrid
   }
 
@@ -64,18 +64,26 @@ const MemoryTest = () => {
   }
 
   const startGame = () => {
-    console.log('start game');
     setStarted(true)
     hideDigits()
   }
   
-  const handleClick = () => {
+  const handleClick = (digit) => {
+    console.log(currentDigit);
     if (!started) {
       startGame()
     }
+
+    if (digit === currentDigit) {
+      setCurrentDigit (digit => digit + 1)
+    } else {
+      console.log('game over');
+    }
+
   }
 
   useEffect(() => {
+    console.log(series);
     setGrid(makeGrid())
   }, [series])
 
@@ -85,8 +93,8 @@ const MemoryTest = () => {
       <div className="  bg-gray-700 p-1">
         {grid.map((row,i)=>
           <div key={i} className="flex">
-            {row.map((item, i)=>{
-              return <div key={i} onClick = {handleClick} className=" w-10 h-10 border m-1 text-white text-xl flex items-center justify-center cursor-pointer" style={item.style} > <span> {item.digit} </span> </div>}
+            {row.map((cell, i)=>{
+              return <div key={i} onClick = {() => {handleClick(cell.digit)}} className=" w-10 h-10 border m-1 text-white text-xl flex items-center justify-center cursor-pointer" style={cell.style} > <span> {cell.digit} </span> </div>}
               )}
           </div>)
         }
