@@ -53,7 +53,7 @@ function Snake() {
     return result
   }
 
-
+  //function to move snake after a fixed interval, return true if sucessful, false if not
   const moveSnake = (direction) => {
     const head = [...snake[0]]
     let overEdge = false
@@ -89,7 +89,7 @@ function Snake() {
     
     //check if move is valid
     if (overEdge || selfBite(head, snake)) {
-      endGame()
+      return false
     } 
     else {
       snake.unshift(head)
@@ -100,6 +100,7 @@ function Snake() {
         snake.pop()
       }
       setSnake([...snake])
+      return true
     }
   }
 
@@ -114,6 +115,7 @@ function Snake() {
       })
     })
 
+    //TO DO: refine this logic
     if (validCoordinates.length===0){
       endGame()
     } 
@@ -139,7 +141,12 @@ function Snake() {
   }
 
   const handleKeyDown = (e) =>{
-    if (gameOver) {return}
+    if (gameOver) {
+      if (e.keyCode === 13) {
+        restart()
+      }
+      return
+    }
 
     //spacebar to pause game
     if (e.keyCode === 32) {
@@ -149,10 +156,10 @@ function Snake() {
 
     const newDirection = getDirection(e.keyCode)
     
-    if (newDirection === 0) {return}
+    if (newDirection === 0 || newDirection + direction === 0) {return}
 
     //not allow switching to the opposite direction
-    if (newDirection + direction === 0){return}
+    // if (newDirection + direction === 0){return}
     setDirection(newDirection)
     
     //if the game is in progress, interval need to be clear
@@ -164,7 +171,11 @@ function Snake() {
 
     moveSnake(newDirection)
     const interval = setInterval(() => {
-      moveSnake(newDirection)
+      const snakeMoved = moveSnake(newDirection)
+      if (!snakeMoved) {
+        clearInterval(interval)
+        endGame()
+      }
     }, 70);
     setMyInterval(interval)
   }
@@ -176,9 +187,17 @@ function Snake() {
   }
 
   const endGame = () => {
+    clearInterval(myInterval)
     setGameOver(true)
-    setRunning(false)
     setGrid(gridData)
+  }
+
+  const restart = () => {
+    setGameOver(false)
+    setRunning(false)
+    setSnake([[rowNum/2, colNum/2]])
+    setFood(makeFood())
+    setDirection(0)
   }
 
   useEffect(() => {
@@ -204,7 +223,10 @@ function Snake() {
 
         {gameOver && 
           <div className=" absolute h-full z-10 flex items-center">
-            <h1 className=" text-4xl">GAME OVER!</h1>
+            <div className="">
+              <h1 className=" text-4xl">GAME OVER!</h1>
+              <h2 className=" text-lg mt-2"> Press Enter to restart </h2>
+            </div>
           </div>
         }
 
