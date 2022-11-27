@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import FinishScreen from "./FinishScreen";
 
 function MathTest() {
-  const time = 30
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+  const time = 30
+
   const [num1, setNum1] = useState(randomNum(10,99))
   const [num2, setNum2] = useState(randomNum(10,99))
   const [count, setCount] =useState(0)
@@ -12,6 +13,8 @@ function MathTest() {
   const [timesUp, setTimesUp] = useState(false)
   const [timerAnimation, setTimerAnimation] = useState('')
   const [inputAnimation, setInputAnimation] = useState('')
+  
+  const ref = useRef()
 
   const refreshQuestion = () =>{
     setNum1(randomNum(10,99))
@@ -50,12 +53,15 @@ function MathTest() {
     setInputAnimation('')
   }
 
+  useEffect(()=>{
+    ref.current.focus()
+  }, [])
+
   return (  
       !timesUp ? 
+      // timesUp ? 
         <div className=" text-center">
-          <h2>Math</h2>
           <h2 className="mt-16 text-xl">Correct answers: {count}</h2>
-          {timesUp && <p>Stop!</p>}
           <div className=" w-96 mx-auto mt-5">
             <div className={ 'bg-red-500 h-1 w-full '+ timerAnimation}></div>
             <div className=" bg-white p-4 rounded-md h-36 flex items-center justify-center">
@@ -64,9 +70,11 @@ function MathTest() {
           </div>
           
           <form onSubmit={handleSubmit} className={`w-96 mx-auto mt-5 border`}>
-            <input type="text" name="answer" value={input} onChange={handleChange} className={`w-full focus:outline-0 border border-gray-400 ${inputAnimation}`} onAnimationEnd={resetInputAnimation}/>
+            <input type="text" name="answer" value={input} ref={ref} onChange={handleChange} autoComplete="off" className={`w-full focus:outline-0 border border-gray-400 ${inputAnimation}`} onAnimationEnd={resetInputAnimation}/>
           </form>
-        </div> : <FinishScreen score={count}/>
+        </div> 
+        : 
+        <FinishScreen score={count}/>
     
   )
 }
