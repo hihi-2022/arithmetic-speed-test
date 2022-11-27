@@ -47,18 +47,25 @@ const MemoryTest = () => {
     return newSeries
   }
 
-  const [series, setSeries] = useState(getSeries(9))
+  const [series, setSeries] = useState([])
   const [grid, setGrid] = useState([...emptyGrid])
-  const [started, setStarted] = useState(false)
+  const [numHidden, setNumHidden] = useState(false)
   const [currentDigit, setCurrentDigit] = useState(1)
   const [done, setDone] = useState(false)
   const [numCorrect, setNumCorrect] = useState(0)
   const [trials, setTrials] = useState(0)
+  const [time, setTime] = useState(0)
+  const [waitTime, setWaitTime] = useState(0)
 
   const accuracyVsChimp = (numCorrect, trials) => {
     const accuracy = numCorrect/(trials*9)
     const chimpAccuracy = 0.9
     return Math.round(chimpAccuracy/accuracy)
+  }
+
+  const speedVsChimp = (waitTime, trials) => {
+    const chimpWaitTime = 500*trials
+    return waitTime/chimpWaitTime
   }
 
   const makeGrid = () => {
@@ -74,17 +81,20 @@ const MemoryTest = () => {
   }
 
   const hideDigits = () => {
+    setNumHidden(true)
     series.forEach(item => {
       const row = item[0]
       const col = item[1]
       grid[row][col].style = {...hiddenCell}
     })
+    setWaitTime(waitTime => waitTime + (Date.now() - time))
   }
 
-  const startGame = () => {
-    setStarted(true)
-    hideDigits()
-  }
+  // const startGame = () => {
+  //   setNumHidden(true)
+  //   hideDigits()
+  //   setWaitTime(waitTime => waitTime + (Date.now() - time))
+  // }
 
   const endGame = () => {
     setDone(true)
@@ -96,15 +106,22 @@ const MemoryTest = () => {
     setCurrentDigit(1)
     setSeries(getSeries(9))
     setDone(false)
+    setNumHidden(false)
+    setTime(Date.now())
   }
   
+  const startTimer = () => {
+    setTime(Date.now())
+    setSeries(getSeries(9))
+  }
+
   const handleClick = (digit, row, col) => {
     if (done) {
       return
     }
 
-    if (!started) {
-      startGame()
+    if (!numHidden) {
+      hideDigits()
     }
     
     if (digit === currentDigit) {
@@ -142,7 +159,7 @@ const MemoryTest = () => {
 
   return ( 
     <>
-    <div className=" mt-24 flex flex-col items-center">
+    <div className=" mt-24 flex flex-col items-center ">
       {/* <h2 className=" text-xl mb-2"> Level {digitNum - 2} - {digitNum} digits </h2> */}
       {/* <div className=" text-lg mb-5">
         Number of digits:
@@ -150,7 +167,8 @@ const MemoryTest = () => {
           digitButtons.map(button => <button key={button.digit} onClick={() => {changeLevel(button.digit)}} style= {button.style} className= " bg-slate-200 text-gray-700 px-3 py-1 mx-1 text-xl hover:bg-gray-500 hover:text-white"> {button.digit} </button>)
         }
       </div> */}
-      <div className=" bg-zinc-700 p-1">
+      <h2> Trials: {trials} </h2>
+      <div className=" bg-zinc-700 p-1 mb-6">
         {grid.map((row, iRow) =>
           <div key={iRow} className="flex">
             {row.map((cell, iCol) => {
@@ -159,8 +177,20 @@ const MemoryTest = () => {
           </div>)
         }
       </div>
-        {trials > 0  && <p> You are currently {accuracyVsChimp(numCorrect, trials)} times less accurate than chimpazees</p>}
-      <button onClick={restart}> Try again </button>
+
+        {trials > 0  && 
+          <div className=" w-96 border border-zinc-700 p-2 pl-6">
+            <h2 className=" font-bold text-center"> Result </h2>
+            <ul className=" list-disc">
+              <li> Average time taken to start: {Math.round(waitTime/trials/1000)}s </li>
+              <li> Average accuracy: {Math.round(numCorrect/(trials*9)*100)}% </li>
+              <li> You are currently {accuracyVsChimp(numCorrect, trials)} times less accurate, and {speedVsChimp(waitTime, trials)} slower than a chimpazee</li>
+            </ul>
+          </div>
+        }
+
+        { trials === 0 &&<button onClick={startTimer}> Start </button>}
+        {done && <button onClick={restart}> Try again </button>}
     </div>
     </>
    )
