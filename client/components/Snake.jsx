@@ -4,6 +4,7 @@ import React, {useEffect, useState, useRef} from "react";
 function Snake() {
   const rowNum = 20
   const colNum = 30
+  const speed = 15  //cell per second => milisecond per cell = 1/10*1000
   const backgroundColor = 'rgb(226 232 240)'
   const snakeColor = 'rgb(51 65 85)'
   const foodColor = 'rgb(100 116 139)'
@@ -116,7 +117,7 @@ function Snake() {
     })
 
     //TO DO: refine this logic
-    if (validCoordinates.length===0){
+    if (validCoordinates.length === 0){
       endGame()
     } 
     else {
@@ -129,7 +130,7 @@ function Snake() {
     switch (keyCode) {
       case 37:
         return -2
-        case 38:
+      case 38:
           return -1
       case 39:
         return 2
@@ -156,10 +157,9 @@ function Snake() {
 
     const newDirection = getDirection(e.keyCode)
     
+    //not allow switching to the opposite direction
     if (newDirection === 0 || newDirection + direction === 0) {return}
 
-    //not allow switching to the opposite direction
-    // if (newDirection + direction === 0){return}
     setDirection(newDirection)
     
     //if the game is in progress, interval need to be clear
@@ -176,7 +176,7 @@ function Snake() {
         clearInterval(interval)
         endGame()
       }
-    }, 70);
+    }, 1/speed*1000);
     setMyInterval(interval)
   }
   
