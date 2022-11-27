@@ -7,6 +7,7 @@ import LeaderBoard from './LeaderBoard'
 import TypingTest from './TypingTest'
 import Game from './Game'
 import Snake from './Snake'
+import MemoryTest from './MemoryTest'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path='/typingtest' element={<TypingTest />}/>
       <Route path='/game' element={<Game />}/>
       <Route path='/snake' element={<Snake />}/>
+      <Route path='/memory' element={<MemoryTest />}/>
     </Routes>
     </div>
   )
