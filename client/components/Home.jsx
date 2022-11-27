@@ -4,7 +4,7 @@ import Card from "./Card";
 function Home() {
   const contentList = [
     {
-      route: '/mattest',
+      route: '/mathtest',
       description: 'Test your math Speed',
       img: 'https://images.twinkl.co.uk/tw1n/image/private/t_630/image_repo/66/0a/T-M-364-display-numbers-black.jpg',
     },

@@ -50,7 +50,6 @@ function Game () {
       {/* <form>
         <input type="text" onKeyDown={handleKeyDown} onKeyUp={handleKeyUp} tabIndex="0"/>
       </form> */}
-      <h2>Game</h2>
       <div className=" relative w-64 h-36 bg-white mx-auto overflow-hidden" >
         <div style={{transform:`translate(${x}px, ${y}px)`}} className="w-3 h-3 bg-black"></div>
         {cordinates.map(cordinate=> <div style={cordinate} className="w-3 h-3 bg-black absolute animate-[goleft_5s_linear_forwards]"></div>)}
