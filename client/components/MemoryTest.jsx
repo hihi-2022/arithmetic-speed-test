@@ -90,12 +90,6 @@ const MemoryTest = () => {
     setWaitTime(waitTime => waitTime + (Date.now() - time))
   }
 
-  // const startGame = () => {
-  //   setNumHidden(true)
-  //   hideDigits()
-  //   setWaitTime(waitTime => waitTime + (Date.now() - time))
-  // }
-
   const endGame = () => {
     setDone(true)
     setGrid([...emptyGrid])
