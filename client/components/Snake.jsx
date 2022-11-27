@@ -214,7 +214,7 @@ function Snake() {
 
   
   return (
-    <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 font-mono text-slate-800">
+    <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 text-slate-800">
       <div className=" mt-24 text-center ">
         <h1 className=" text-5xl mb-10"> SNAKE! </h1>
         <h2 className=" mb-3 text-2xl">Score: {snake?.length - 1}</h2>
