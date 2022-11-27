@@ -20,6 +20,7 @@ function Snake() {
   const [food, setFood] = useState(null)
   const [direction, setDirection] = useState(0)
   const [myInterval, setMyInterval] = useState(0)
+  const [running, setRunning] = useState(false)
   const [gameOver, setGameOver] = useState(false)
 
   const ref = useRef(null)
@@ -75,11 +76,13 @@ function Snake() {
         head[1]--
         if (head[1] < 0) {overEdge = true}
         break;
+
       //Right
       case 2:
         head[1]++
         if (head[1] > colNum -1) {overEdge = true}
-        break;    
+        break;
+
       default:
         break;
       }
@@ -87,7 +90,6 @@ function Snake() {
     //check if move is valid
     if (overEdge || selfBite(head, snake)) {
       endGame()
-      console.log('game over');
     } 
     else {
       snake.unshift(head)
@@ -113,9 +115,9 @@ function Snake() {
     })
 
     if (validCoordinates.length===0){
-      console.log('game over');
       endGame()
-    } else {
+    } 
+    else {
       const randomIndex = randomNum(0, validCoordinates.length-1)
       return validCoordinates[randomIndex]
     }
@@ -138,6 +140,13 @@ function Snake() {
 
   const handleKeyDown = (e) =>{
     if (gameOver) {return}
+
+    //spacebar to pause game
+    if (e.keyCode === 32) {
+      pauseGame()
+      return
+    }
+
     const newDirection = getDirection(e.keyCode)
     
     if (newDirection === 0) {return}
@@ -146,9 +155,11 @@ function Snake() {
     if (newDirection + direction === 0){return}
     setDirection(newDirection)
     
-    //if the game is in progress (myInteral !== 0), interval need to be clear
-    if (myInterval !== 0 ) {
+    //if the game is in progress, interval need to be clear
+    if ( running ) {
       clearInterval(myInterval)
+    } else {
+      setRunning(true)
     }
 
     moveSnake(newDirection)
@@ -159,12 +170,14 @@ function Snake() {
   }
   
 
-  const stopGame = () => {
+  const pauseGame = () => {
     clearInterval(myInterval)
+    setRunning(false)
   }
 
   const endGame = () => {
     setGameOver(true)
+    setRunning(false)
     setGrid(gridData)
   }
 
@@ -184,16 +197,18 @@ function Snake() {
   return (
     <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 ">
       <div className=" mt-40 text-center ">
+     
+        <h2 className=" mb-3 text-2xl">Score: {snake?.length - 1}</h2>
         
-        <h2 className=" mb-3 text-lg">Score: {snake?.length - 1}</h2>
-        
-        <div className=" flex flex-col items-center bg-slate-200 relative ">
+        <div className=" flex flex-col items-center relative ">
 
         {gameOver && 
           <div className=" absolute h-full z-10 flex items-center">
             <h1 className=" text-4xl">GAME OVER!</h1>
           </div>
-        } 
+        }
+
+        {/********  Game play area ********/}
           <div className="  border-8 border-slate-700 flex flex-col">
             {grid.map((row,i)=>
               <div key={i} className="flex">
@@ -204,7 +219,19 @@ function Snake() {
             }
           </div>
         </div>
-        <button onClick={stopGame} className= " border border-slate-600 bg-slate-200 mt-6 px-2 py-1"> Pause </button>
+
+        {/********  Game instruction ********/}
+        <div className=" mt-5 text-xl">
+          {!gameOver && 
+            <>
+              {running  ?
+                <p> Press spacebar to pause </p>
+                :
+                <p> Press any arrow key to start </p>
+              } 
+            </> 
+        }
+        </div>    
       </div>
 
     </div>
