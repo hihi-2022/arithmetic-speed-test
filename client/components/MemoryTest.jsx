@@ -23,10 +23,12 @@ const MemoryTest = () => {
   }
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
+  const [level, setLevel] = useState(4)
+
   const getSeries = () => {
     const newSeries = []
     const indexes = [...coordinateIndexes]
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < level; i++) {
       const randomMetaIndex = randomNum(0, indexes.length-1)
       const randomIndex = indexes[randomMetaIndex]
       newSeries.push(allCoordinates[randomIndex])
@@ -68,7 +70,7 @@ const MemoryTest = () => {
     hideDigits()
   }
   
-  const handleClick = (digit) => {
+  const handleClick = (digit, row, col) => {
     console.log(currentDigit);
     if (!started) {
       startGame()
@@ -76,8 +78,10 @@ const MemoryTest = () => {
 
     if (digit === currentDigit) {
       setCurrentDigit (digit => digit + 1)
+      grid[row][col].style = {opacity: 0}
     } else {
       console.log('game over');
+
     }
 
   }
@@ -90,11 +94,12 @@ const MemoryTest = () => {
   return ( 
     <>
     <div className=" mt-24 flex flex-col items-center">
+      <h2 className=" text-xl"> Level: {level - 3} </h2>
       <div className="  bg-gray-700 p-1">
-        {grid.map((row,i)=>
-          <div key={i} className="flex">
-            {row.map((cell, i)=>{
-              return <div key={i} onClick = {() => {handleClick(cell.digit)}} className=" w-10 h-10 border m-1 text-white text-xl flex items-center justify-center cursor-pointer" style={cell.style} > <span> {cell.digit} </span> </div>}
+        {grid.map((row, iRow) =>
+          <div key={iRow} className="flex">
+            {row.map((cell, iCol) => {
+              return <div key={iCol} onClick = {() => {handleClick(cell.digit, iRow, iCol)}} className=" w-10 h-10 border m-1 text-white text-2xl flex items-center justify-center cursor-pointer" style={cell.style} > <span> {cell.digit} </span> </div>}
               )}
           </div>)
         }
