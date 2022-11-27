@@ -20,10 +20,9 @@ function MathTest() {
 
   const startGame = () =>{
     setStarted(true)
-    setTimerAnimation('animate-[shrink_'+ time +'s_linear_forwards]')
+    setTimerAnimation('animate-[shrink_' + time + 's_linear_forwards]')
     setTimeout(()=>{
       setTimesUp(true)
-      console.log("Time's up!")
     }, time*1000)
     
   }
@@ -51,12 +50,6 @@ function MathTest() {
     setInputAnimation('')
   }
 
-  console.log(num1+num2)
-
-  useEffect(()=>{
-    console.log('start')
-  },[])
-
   return (  
       !timesUp ? 
         <div className=" text-center">
@@ -64,7 +57,7 @@ function MathTest() {
           <h2 className="mt-16 text-xl">Correct answers: {count}</h2>
           {timesUp && <p>Stop!</p>}
           <div className=" w-96 mx-auto mt-5">
-            <div className={` bg-red-500 h-1 w-full ${timerAnimation}`}></div>
+            <div className={ 'bg-red-500 h-1 w-full '+ timerAnimation}></div>
             <div className=" bg-white p-4 rounded-md h-36 flex items-center justify-center">
               <h2 className=" text-4xl">{num1} + {num2}</h2> 
             </div>
