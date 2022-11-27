@@ -178,19 +178,20 @@ const MemoryTest = () => {
         }
       </div>
 
-        {trials > 0  && 
+        {trials > 0  && done &&
           <div className=" w-96 border border-zinc-700 p-2 pl-6">
             <h2 className=" font-bold text-center"> Result </h2>
-            <ul className=" list-disc">
-              <li> Average time taken to start: {Math.round(waitTime/trials/1000)}s </li>
-              <li> Average accuracy: {Math.round(numCorrect/(trials*9)*100)}% </li>
-              <li> You are currently {accuracyVsChimp(numCorrect, trials)} times less accurate, and {speedVsChimp(waitTime, trials)} slower than a chimpazee</li>
+            <ul className=" list-disc ">
+              <li> Your average time taken to start: {Math.round(waitTime/trials/1000)}s </li>
+              <li> Your average accuracy: {Math.round(numCorrect/(trials*9)*100)}% </li>
+              <li className=" font-semibold mb-4"> You are currently {accuracyVsChimp(numCorrect, trials)} times less accurate, and {speedVsChimp(waitTime, trials)} times slower than a chimpazee</li>
+              <a href="https://www.youtube.com/watch?v=zsXP8qeFF6A" className=" underline"> Watch how chimpazees do </a>
             </ul>
           </div>
         }
 
-        { trials === 0 &&<button onClick={startTimer}> Start </button>}
-        {done && <button onClick={restart}> Try again </button>}
+        { (time === 0) &&<button onClick={startTimer} className= " border border-gray-400 py-2 px-4 mt-5 bg-zinc-200 hover:bg-zinc-400"> Start </button>}
+        {done && <button onClick={restart} className= " border border-gray-400 py-2 px-4 mt-5 bg-zinc-200 hover:bg-zinc-400"> Try again </button>}
     </div>
     </>
    )
