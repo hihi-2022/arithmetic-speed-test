@@ -4,7 +4,7 @@ import React, {useEffect, useState, useRef} from "react";
 function Snake() {
   const rowNum = 20
   const colNum = 30
-  const speed = 15  //cell per second => milisecond per cell = 1/10*1000
+  const speed = 12  //cell per second => milisecond per cell = 1/10*1000
   const backgroundColor = 'rgb(226 232 240)'
   const snakeColor = 'rgb(51 65 85)'
   const foodColor = 'rgb(100 116 139)'
@@ -214,9 +214,9 @@ function Snake() {
 
   
   return (
-    <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 ">
-      <div className=" mt-40 text-center ">
-     
+    <div ref={ref} onKeyDown={handleKeyDown} tabIndex={-1} className="  h-full w-full absolute top-0 font-mono text-slate-800">
+      <div className=" mt-24 text-center ">
+        <h1 className=" text-5xl mb-10"> SNAKE! </h1>
         <h2 className=" mb-3 text-2xl">Score: {snake?.length - 1}</h2>
         
         <div className=" flex flex-col items-center relative ">
