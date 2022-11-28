@@ -4,7 +4,6 @@ import React, {useEffect, useState, useRef} from "react";
 function Snake() {
   const rowNum = 20
   const colNum = 30
-  const speed = 12  //cell per second => milisecond per cell = 1/10*1000
   const backgroundColor = 'rgb(226 232 240)'
   const snakeColor = 'rgb(51 65 85)'
   const foodColor = 'rgb(100 116 139)'
@@ -15,7 +14,8 @@ function Snake() {
   const gridData = Array(rowNum).fill().map(()=>Array(colNum).fill({...cell}))
   
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
-
+  
+  const [speed, setSpeed] = useState(5)  //cell per second => milisecond per cell = 1/10*1000
   const [grid, setGrid] = useState(gridData)
   const [snake, setSnake] = useState(null)
   const [food, setFood] = useState(null)
@@ -97,6 +97,7 @@ function Snake() {
       const hitFood = head.every((Coordinate, index)=> Coordinate === food[index])
       if (hitFood) {
         setFood(makeFood())
+        setSpeed(speed => speed + 1)
       } else {
         snake.pop()
       }
@@ -115,6 +116,8 @@ function Snake() {
         }
       })
     })
+
+    console.log({validCoordinates})
 
     //TO DO: refine this logic
     if (validCoordinates.length === 0){
