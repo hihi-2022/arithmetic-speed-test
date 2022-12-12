@@ -4,6 +4,7 @@ import React, {useEffect, useState, useRef} from "react";
 function Snake() {
   const rowNum = 20
   const colNum = 30
+  const startingSpeed = 7
   const backgroundColor = 'rgb(226 232 240)'
   const snakeColor = 'rgb(51 65 85)'
   const foodColor = 'rgb(100 116 139)'
@@ -15,7 +16,7 @@ function Snake() {
   
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
   
-  const [speed, setSpeed] = useState(5)  //cell per second => milisecond per cell = 1/10*1000
+  const [speed, setSpeed] = useState(startingSpeed)  //cell per second => milisecond per cell = 1/10*1000
   const [grid, setGrid] = useState(gridData)
   const [snake, setSnake] = useState(null)
   const [food, setFood] = useState(null)
@@ -97,7 +98,7 @@ function Snake() {
       const hitFood = head.every((Coordinate, index)=> Coordinate === food[index])
       if (hitFood) {
         setFood(makeFood())
-        setSpeed(speed => speed + 1)
+        setSpeed(speed => speed + 0.5)
       } else {
         snake.pop()
       }
@@ -201,6 +202,7 @@ function Snake() {
     setSnake([[rowNum/2, colNum/2]])
     setFood(makeFood())
     setDirection(0)
+    setSpeed(startingSpeed)
   }
 
   useEffect(() => {
