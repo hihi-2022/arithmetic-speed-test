@@ -40,7 +40,7 @@ function FinishScreen({score}) {
           {showSaveForm ? 
             <form onSubmit={handleNameSubmit} >
               <label htmlFor="name"> Your name: </label>
-              <input type="text" name="name" className=" text-gray-500 border"/>
+              <input type="text" name="name" className=" border"/>
               <button className=" px-2 py-1 border border-gray-800 bg-slate-100 ml-3"> Submit </button>
             </form>
           :
