@@ -23,7 +23,7 @@ function MathTest() {
 
   const startGame = () =>{
     setStarted(true)
-    setTimerAnimation('animate-[shrink_' + time + 's_linear_forwards]')
+    setTimerAnimation('animate-[shrink_30s_linear_forwards]')
     setTimeout(()=>{
       setTimesUp(true)
     }, time*1000)
