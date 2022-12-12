@@ -5,12 +5,17 @@
   "repository": "https://github.com/dev-academy-challenges/react-to-web-api.git",
   "main": "server/index.js",
   "scripts": {
+    "build": "run-p build:client build:server",
+    "build:client": "npm run webpack -- --mode production",
+    "build:server": "npm run knex -- migrate:latest",
     "start": "node server",
     "test": "jest --watchAll",
+    "test:watch": "jest --noStackTrace --watchAll",
     "dev": "run-p dev:client dev:server",
-    "dev:client": "webpack --watch --config client/webpack.config.js",
-    "dev:server": "nodemon --watch server",
-    "knex": "knex --knexfile server/db/knexfile.js",
+    "dev:client": "npm run webpack -- --watch",
+    "dev:server": "nodemon --watch server server/index.js",
+    "webpack": "webpack --config ./client/webpack.config.js",
+    "knex": "knex --knexfile ./server/db/knexfile.js",
     "lint": "eslint --ext .js,.jsx ."
   },
   "babel": {
