@@ -60,20 +60,20 @@ function TypingTest() {
   },[])
 
   return (
-    <div className=" text-center">
-      <h2>TypingTest</h2>
+    <div className=" text-center mt-28">
+      <h2 className=" text-2xl">Typing speed test</h2>
 
-      <h2 className=" text-center">Time: {timerRender(time)}</h2>
-      <h2 className=" text-center">Your typing speed: {typingSpeed(typedText, time)}</h2>
+      <h2 className=" text-center text-xl my-6">Time: {timerRender(time)}</h2>
+      <h2 className=" text-center text-xl">Your typing speed: {typingSpeed(typedText, time)}</h2>
       <div className=" w-1/2 mx-auto mt-5 bg-white p-4 rounded-md" onClick={handleClick}>
-        <p> 
-          <span className=" text-red-500">{typedText}</span>
+        <p className=" text-left"> 
+          <span className=" text-green-700 font-semibold">{typedText}</span>
           <span className=" bg-blue-300">{textToType.charAt(0)}</span>
           {textToType.substring(1)}
         </p>
       </div>
 
-      <button onClick={stop} className=" border bg-red-400 mt-5">Stop</button>
+      <button onClick={stop} className=" border bg-red-400 hover:bg-red-500 duration-100 mt-5 py-2 px-4">Stop</button>
 
       <form className=" opacity-0">
         <input type="text" autoFocus ref={inputRef} onChange={handleChange} className=" "/>
