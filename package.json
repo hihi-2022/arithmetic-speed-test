@@ -63,16 +63,18 @@
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "sqlite3": "^5.1.2",
+    "style-loader": "^3.3.1",
     "supertest": "^6.2.2",
     "webpack": "^5.69.1",
-    "webpack-cli": "^4.9.2",
-    "style-loader": "^3.3.1"
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {
+    "css-loader": "^6.7.2",
     "dotenv": "^16.0.3",
     "express": "^4.17.2",
     "knex": "^2.3.0",
     "pg": "^8.8.0",
+    "postcss-loader": "^7.0.2",
     "react-router": "^6.4.3",
     "superagent": "7.1.1"
   },
