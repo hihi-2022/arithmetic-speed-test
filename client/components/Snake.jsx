@@ -116,26 +116,12 @@ function Snake() {
 
   function makeFood () {  
     let validCoordinates = [...allCordinates]
-    // const excludedCells = []
-
-    // grid.forEach((row,iRow) => {
-    //   row.forEach((cell, iCol)=> {
-    //     if (cell.backgroundColor === backgroundColor) {
-    //       validCoordinates.push([iRow, iCol])
-    //     } else {
-    //       excludedCells.push([iRow, iCol])
-    //     }
-    //   })
-    // })
     if (snake) {
       snake.forEach(snakePart => {
         validCoordinates = validCoordinates.filter(cell => !cell.every((coordinate, index) => coordinate === snakePart[index]) 
         )
       })
     }
-
-
-    console.log({validCoordinates})
 
     //TO DO: refine this logic
     if (validCoordinates.length === 0){
@@ -192,7 +178,6 @@ function Snake() {
 
     moveSnake(newDirection)
     const interval = setInterval(() => {
-      console.log({snake})
       const snakeMoved = moveSnake(newDirection)
       if (!snakeMoved) {
         clearInterval(interval)
