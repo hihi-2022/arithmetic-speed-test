@@ -64,7 +64,7 @@ function TypingTest() {
       <h2 className=" text-2xl">Typing speed test</h2>
 
       <h2 className=" text-center text-xl my-6">Time: {timerRender(time)}</h2>
-      <h2 className=" text-center text-xl">Your typing speed: {typingSpeed(typedText, time)}</h2>
+      <h2 className=" text-center text-xl">Your typing speed: {typingSpeed(typedText, time)} WPS </h2>
       <div className=" w-1/2 mx-auto mt-5 bg-white p-4 rounded-md" onClick={handleClick}>
         <p className=" text-left"> 
           <span className=" text-green-700 font-semibold">{typedText}</span>
