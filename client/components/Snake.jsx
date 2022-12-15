@@ -7,7 +7,8 @@ function Snake() {
   const startingSpeed = 7
   const backgroundColor = 'rgb(226 232 240)'
   const snakeColor = 'rgb(51 65 85)'
-  const foodColor = 'rgb(100 116 139)'
+  // const foodColor = 'rgb(100 116 139)'
+  const foodColor = 'rgb(220 38 38)'
   const cell = {
     backgroundColor: backgroundColor
   }
@@ -15,6 +16,12 @@ function Snake() {
   const gridData = Array(rowNum).fill().map(()=>Array(colNum).fill({...cell}))
   
   const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+  const allCordinates = []
+  for (let row = 0; row < rowNum; row++) {
+    for (let col = 0; col < colNum; col++) {
+      allCordinates.push([row, col])
+    } 
+  }
   
   const [speed, setSpeed] = useState(startingSpeed)  //cell per second => milisecond per cell = 1/10*1000
   const [grid, setGrid] = useState(gridData)
@@ -108,15 +115,25 @@ function Snake() {
   }
 
   function makeFood () {  
-    const validCoordinates = []
+    let validCoordinates = [...allCordinates]
+    // const excludedCells = []
 
-    grid.forEach((row,iRow) => {
-      row.forEach((cell, iCol)=> {
-        if (cell.backgroundColor === backgroundColor) {
-          validCoordinates.push([iRow, iCol])
-        }
+    // grid.forEach((row,iRow) => {
+    //   row.forEach((cell, iCol)=> {
+    //     if (cell.backgroundColor === backgroundColor) {
+    //       validCoordinates.push([iRow, iCol])
+    //     } else {
+    //       excludedCells.push([iRow, iCol])
+    //     }
+    //   })
+    // })
+    if (snake) {
+      snake.forEach(snakePart => {
+        validCoordinates = validCoordinates.filter(cell => !cell.every((coordinate, index) => coordinate === snakePart[index]) 
+        )
       })
-    })
+    }
+
 
     console.log({validCoordinates})
 
@@ -175,6 +192,7 @@ function Snake() {
 
     moveSnake(newDirection)
     const interval = setInterval(() => {
+      console.log({snake})
       const snakeMoved = moveSnake(newDirection)
       if (!snakeMoved) {
         clearInterval(interval)
@@ -236,11 +254,11 @@ function Snake() {
         }
 
         {/********  Game play area ********/}
-          <div className="  border-8 border-slate-700 flex flex-col">
+          <div className="  border-8 border-slate-700 flex flex-col ">
             {grid.map((row,i)=>
               <div key={i} className="flex">
                 {row.map((item, i)=>{
-                  return <div key={i} className=" w-4 h-4 border-0 " style={item}></div>}
+                  return <div key={i} className=" w-4 h-4 border-0" style={item}></div>}
                   )}
               </div>)
             }
